@@ -1,3 +1,9 @@
+const formatDate = (stringDate) => {
+    const date = new Date(stringDate)
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString("id", options);
+}
+
 const renderMetadata = (meta) => {
     document.title = meta.title;
 
@@ -19,15 +25,17 @@ const renderMenu = (menu) => {
 const renderCover = (cover) => {
     document.getElementById('cover-title').innerHTML = cover.title;
     document.getElementById('cover-bride-name').innerHTML = cover.bride_name;
+    document.getElementById('cover-date').innerHTML = formatDate(cover.date);
 }
 
 const renderHome = (home) => {
     document.getElementById('home-title').innerHTML = home.title;
     document.getElementById('home-bride-name').innerHTML = home.bride_name;
-    document.getElementById('home-date').innerHTML = home.date;
+    document.getElementById('home-date').innerHTML = formatDate(home.date);
 }
 
 const renderContent = (content) => {
+    document.getElementById('content-date').innerHTML = formatDate(content.date);
     document.getElementById('content-groom-name').innerHTML = content.groom.name;
     document.getElementById('content-groom-parent').innerHTML = content.groom.parent;
     document.getElementById('content-bride-name').innerHTML = content.bride.name;
@@ -36,8 +44,8 @@ const renderContent = (content) => {
 
 window.addEventListener('DOMContentLoaded', (event) => {
     // Fetch the JSON data
-    fetch('https://raw.githubusercontent.com/yeppymp/undangan/main/data.json')
-    // fetch('../data.json')
+    // fetch('https://raw.githubusercontent.com/yeppymp/undangan/main/data.json')
+    fetch('../data.json')
         .then(response => response.json())
         .then(data => {
             renderMetadata(data.meta);
@@ -225,9 +233,9 @@ const util = (() => {
 
         let div = document.createElement('div');
         div.classList.add('m-2');
-        div.innerHTML = `<p class="mt-0 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
+        div.innerHTML = `<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
 
-        document.getElementById('form-nama').value = name;
+        // document.getElementById('form-nama').value = name;
         document.getElementById('nama-tamu').appendChild(div);
     };
 

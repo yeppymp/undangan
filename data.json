@@ -13,8 +13,9 @@
     "wishes": "Ucapan"
   },
   "cover": {
-    "title": "The Wedding of",
-    "bride_name": "Yeppy & Riski"
+    "title": "Undangan Pernikahan",
+    "bride_name": "Yeppy & Riski",
+    "date": "2023-11-26"
   },
   "home": {
     "title": "Undangan Pernikahan",
@@ -31,6 +32,7 @@
       "name": "Riski Setia Indah Perihatin",
       "parent": "Bapak Rosad (Alm) & Ibu Arih"
     },
+    "date": "2023-11-26",
     "akad_time": "10:00",
     "resepsi_time": "13:00",
     "place": {
