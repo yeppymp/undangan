@@ -35,13 +35,13 @@ async function initializeGapiClient() {
   let progressTotal = 75;
 
   await loadMeta();
-  progressTotal = 75 + 8.33333333333;
-  bar.style.width = `${progressTotal}%`;
-  info.innerText = `Loading assets (10/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+  // progressTotal = 75 + 8.33333333333;
+  // bar.style.width = `${progressTotal}%`;
+  // info.innerText = `Loading assets (10/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
   await loadMenu();
-  progressTotal = 75 + (8.33333333333 * 2);
-  bar.style.width = `${progressTotal}%`;
-  info.innerText = `Loading assets (11/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+  // progressTotal = 75 + (8.33333333333 * 2);
+  // bar.style.width = `${progressTotal}%`;
+  // info.innerText = `Loading assets (11/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
   await loadCover();
   progressTotal = 75 + (8.33333333333 * 3);
   bar.style.width = `${progressTotal}%`;
