@@ -55,6 +55,20 @@ async function initializeGapiClient() {
   document.documentElement.scrollTop = 0;
   window.scrollTo(0, 0);
 
+  let name = (new URLSearchParams(window.location.search)).get('to') ?? '';
+
+  if (name.length == 0) {
+      document.getElementById('nama-tamu').remove();
+      return;
+  }
+
+  let div = document.createElement('div');
+  div.classList.add('m-2');
+  div.innerHTML = `<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
+
+  // document.getElementById('form-nama').value = name;
+  document.getElementById('nama-tamu').appendChild(div);
+
   loadHome();
   loadContent();
 
