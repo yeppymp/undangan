@@ -1,61 +1,6 @@
-const formatDate = (stringDate) => {
-    const date = new Date(stringDate)
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString("id", options);
-}
 
-const renderMetadata = (meta) => {
-    document.title = meta.title;
-
-    document.querySelector('meta[property="og:title"]').setAttribute("content", meta.title);
-    document.querySelector('meta[property="og:description"]').setAttribute("content", meta.description);
-    document.querySelector('meta[property="og:image:alt"]').setAttribute("content", meta.description);
-    document.querySelector('meta[property="og:site_name"]').setAttribute("content", meta.site_name);
-    document.querySelector('meta[property="og:url"]').setAttribute("content", meta.url);
-}
-
-const renderMenu = (menu) => {
-    document.getElementById('nav-home').innerHTML = menu.home;
-    document.getElementById('nav-bride').innerHTML = menu.bride;
-    document.getElementById('nav-date').innerHTML = menu.date;
-    // document.getElementById('nav-gallery').innerHTML = menu.gallery;
-    document.getElementById('nav-wishes').innerHTML = menu.wishes;
-}
-
-const renderCover = (cover) => {
-    document.getElementById('cover-title').innerHTML = cover.title;
-    document.getElementById('cover-bride-name').innerHTML = cover.bride_name;
-    document.getElementById('cover-date').innerHTML = formatDate(cover.date);
-}
-
-const renderHome = (home) => {
-    document.getElementById('home-title').innerHTML = home.title;
-    document.getElementById('home-bride-name').innerHTML = home.bride_name;
-    document.getElementById('home-date').innerHTML = formatDate(home.date);
-}
-
-const renderContent = (content) => {
-    document.getElementById('content-date').innerHTML = formatDate(content.date);
-    document.getElementById('content-groom-name').innerHTML = content.groom.name;
-    document.getElementById('content-groom-parent').innerHTML = content.groom.parent;
-    document.getElementById('content-bride-name').innerHTML = content.bride.name;
-    document.getElementById('content-bride-parent').innerHTML = content.bride.parent;
-}
-
-window.addEventListener('DOMContentLoaded', (event) => {
-    // Fetch the JSON data
-    // fetch('https://raw.githubusercontent.com/yeppymp/undangan/main/data.json')
-    fetch('../data.json')
-        .then(response => response.json())
-        .then(data => {
-            renderMetadata(data.meta);
-            renderMenu(data.menus);
-            renderCover(data.cover);
-            renderHome(data.home);
-            renderContent(data.content);
-        })
-        .catch(error => console.error('Error fetching JSON:', error));
-});
+const bar = document.getElementById('bar');
+const info = document.getElementById('progress-info');
 
 const util = (() => {
 
@@ -234,10 +179,8 @@ const util = (() => {
 const progress = (() => {
 
     const assets = document.querySelectorAll('img');
-    const info = document.getElementById('progress-info');
-    const bar = document.getElementById('bar');
 
-    let total = assets.length;
+    let total = assets.length + 3;
     let loaded = 0;
 
     const progress = () => {

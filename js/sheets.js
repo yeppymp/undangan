@@ -1,50 +1,3 @@
-function timeFromNow(date) {
-  const detik = Math.floor((new Date() - new Date(date)) / 1000);
-  const tahun = Math.floor(detik / 31536000);
-  const bulan = Math.floor(detik / 2592000);
-  const hari = Math.floor(detik / 86400);
-
-  if (hari > 548) {
-    return tahun + ' tahun yang lalu';
-  }
-  if (hari >= 320 && hari <= 547) {
-    return 'satu tahun yang lalu';
-  }
-  if (hari >= 45 && hari <= 319) {
-    return bulan + ' bulan yang lalu';
-  }
-  if (hari >= 26 && hari <= 45) {
-    return 'satu bulan yang lalu';
-  }
-
-  const jam = Math.floor(detik / 3600);
-
-  if (jam >= 36 && hari <= 25) {
-    return hari + ' hari yang lalu';
-  }
-  if (jam >= 22 && jam <= 35) {
-    return 'satu hari yang lalu';
-  }
-
-  const menit = Math.floor(detik / 60);
-
-  if (menit >= 90 && jam <= 21) {
-    return jam + ' jam yang lalu';
-  }
-  if (menit >= 45 && menit <= 89) {
-    return 'satu jam yang lalu';
-  }
-  if (detik >= 90 && menit <= 44) {
-    return menit + ' menit yang lalu';
-  }
-  if (detik >= 45 && detik <= 89) {
-    return 'satu menit yang lalu';
-  }
-  if (detik >= 0 && detik <= 45) {
-    return 'satu detik yang lalu';
-  }
-}
-
 /* exported gapiLoaded */
 /* exported gisLoaded */
 /* exported handleAuthClick */
@@ -59,37 +12,182 @@ const serviceAccount = {
 // Discovery doc URL for APIs used by the quickstart
 const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
 
-const SHEET_ID = '1DMhwnJYkErVn5IMdWcbDf7mMZNVY9He19DgtydSs1ME';
-const SHEET_RANGE = 'UD1!A1:G';
+const UNDANGAN_ID = 'UD1';
 
-/**
- * Callback after api.js is loaded.
- */
+const SHEET_ID = '1DMhwnJYkErVn5IMdWcbDf7mMZNVY9He19DgtydSs1ME';
+const SHEET_RANGE_WISHES  = `${UNDANGAN_ID}!A17:G`;
+const SHEET_RANGE_META    = `${UNDANGAN_ID}!A2:D3`;
+const SHEET_RANGE_MENU    = `${UNDANGAN_ID}!F2:J3`;
+const SHEET_RANGE_COVER   = `${UNDANGAN_ID}!A7:C8`;
+const SHEET_RANGE_HOME    = `${UNDANGAN_ID}!E7:H8`;
+const SHEET_RANGE_CONTENT = `${UNDANGAN_ID}!A12:I13`;
+
 function gapiLoaded() {
   gapi.load('client', initializeGapiClient);
 }
 
-/**
- * Callback after the API client is loaded. Loads the
- * discovery doc to initialize the API.
- */
 async function initializeGapiClient() {
   await gapi.auth.setToken(await GetAccessTokenFromServiceAccount.do(serviceAccount));
   await gapi.client.init({
     discoveryDocs: [DISCOVERY_DOC],
   });
+
+  let progressTotal = 75;
+
+  await loadMeta();
+  progressTotal = 75 + 8.33333333333;
+  bar.style.width = `${progressTotal}%`;
+  info.innerText = `Loading assets (10/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+  await loadMenu();
+  progressTotal = 75 + (8.33333333333 * 2);
+  bar.style.width = `${progressTotal}%`;
+  info.innerText = `Loading assets (11/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+  await loadCover();
+  progressTotal = 75 + (8.33333333333 * 3);
+  bar.style.width = `${progressTotal}%`;
+  info.innerText = `Loading assets (12/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+  window.scrollTo(0, 0);
+
+  loadHome();
+  loadContent();
+
+  let nm = document.getElementById('loading');
+  let op = parseInt(nm.style.opacity);
+  let clear = null;
+
+  clear = setInterval(() => {
+      if (op >= 0) {
+          nm.style.opacity = op.toString();
+          op -= 0.025;
+      } else {
+          clearInterval(clear);
+          clear = null;
+          nm.remove();
+          return;
+      }
+  }, 10);
 }
-/**
-       * Print the names and majors of students in a sample spreadsheet:
-       * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-       */
+
+async function loadStaticData(range, type='META') {
+  let response;
+  try {
+    // Fetch first 10 files
+    response = await gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: SHEET_ID,
+      range,
+    });
+  } catch (err) {
+    console.log(`[${type}] Error: `, err);
+    return;
+  }
+
+  const rangeResult = response.result;
+
+  if (!rangeResult || !rangeResult.values || rangeResult.values.length == 0) {
+    console.log(`[${type}] Error: No values found.`);
+    return;
+  }
+
+  const [headers, ...data] = rangeResult.values;
+  const staticData = data.map(row => {
+    return row.reduce((acc, value, i) => {
+      const key = headers[i];
+      if (key === '') return acc;
+      return { ...acc, [key]: value };
+    }, {});
+  })[0];
+
+  return staticData;
+}
+
+// META
+const renderMetadata = (meta) => {
+  document.title = meta.title;
+
+  document.querySelector('meta[property="og:title"]').setAttribute("content", meta.title);
+  document.querySelector('meta[property="og:description"]').setAttribute("content", meta.description);
+  document.querySelector('meta[property="og:image:alt"]').setAttribute("content", meta.description);
+  document.querySelector('meta[property="og:site_name"]').setAttribute("content", meta.site_name);
+  document.querySelector('meta[property="og:url"]').setAttribute("content", meta.url);
+}
+
+async function loadMeta() {
+  const meta = await loadStaticData(SHEET_RANGE_META, 'META');
+  renderMetadata(meta);
+}
+
+// MENU
+const renderMenu = (menu) => {
+  document.getElementById('nav-home').innerHTML = menu.home;
+  document.getElementById('nav-bride').innerHTML = menu.bride;
+  document.getElementById('nav-date').innerHTML = menu.date;
+  // document.getElementById('nav-gallery').innerHTML = menu.gallery;
+  document.getElementById('nav-wishes').innerHTML = menu.wishes;
+}
+
+async function loadMenu() {
+  const menu = await loadStaticData(SHEET_RANGE_MENU, 'MENU');
+  renderMenu(menu);
+}
+
+// COVER
+const renderCover = (cover) => {
+  document.getElementById('cover-title').innerHTML = cover.title;
+  document.getElementById('cover-bride-name').innerHTML = cover.bride_name;
+  document.getElementById('cover-date').innerHTML = formatDate(cover.date);
+}
+
+async function loadCover() {
+  const cover = await loadStaticData(SHEET_RANGE_COVER, 'COVER');
+  renderCover(cover);
+}
+
+// HOME
+const renderHome = (home) => {
+  document.getElementById('home-title').innerHTML = home.title;
+  document.getElementById('home-bride-name').innerHTML = home.bride_name;
+  document.getElementById('home-date').innerHTML = formatDate(home.date);
+  document.getElementById('home-calendar').setAttribute('href', home.calendar_url);
+}
+
+async function loadHome() {
+  const home = await loadStaticData(SHEET_RANGE_HOME, 'HOME');
+  renderHome(home);
+}
+
+// CONTENT
+const renderContent = (content) => {
+  document.getElementById('content-date').innerHTML = formatDate(content.date);
+  document.getElementById('content-groom-name').innerHTML = content.groom_name;
+  document.getElementById('content-groom-parent').innerHTML = content.groom_parent;
+  document.getElementById('content-bride-name').innerHTML = content.bride_name;
+  document.getElementById('content-bride-parent').innerHTML = content.bride_parent;
+  document.getElementById('content-akad').innerHTML = `Pukul ${content.akad_time} - Selesai`;
+  document.getElementById('content-resepsi').innerHTML = `Pukul ${content.resepsi_time} - Selesai`;
+  document.getElementById('content-address').innerHTML = content.address;
+  document.getElementById('content-maps').setAttribute('href', content.maps);
+}
+
+async function loadContent() {
+  const home = await loadStaticData(SHEET_RANGE_CONTENT, 'CONTENT');
+  renderContent(home);
+}
+
+// WISHES
 async function listWishes() {
   let response;
   try {
     // Fetch first 10 files
     response = await gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
-      range: SHEET_RANGE,
+      range: SHEET_RANGE_WISHES,
     });
   } catch (err) {
     console.log(err);
@@ -137,16 +235,18 @@ function onWishesLoaded(data) {
               <hr class="text-light my-1">
               <p class="text-light mt-0 mb-1 mx-0 p-0" style="white-space: pre-line">${wish.content}</p>
 
-              <div class="d-flex flex-wrap justify-content-end align-items-center">
-                  <button style="font-size: 0.8rem;" onclick="like.like(this)"
-                      data-uuid="4e206228-42af-4b9e-aa2d-dd5fb7ebd5de"
-                      class="btn btn-sm rounded-2 py-0 px-0">
-                      <div class="d-flex justify-content-start align-items-center">
-                          <p class="my-0 mx-1">${wish.likes}</p>
-                          <i class="py-1 me-1 p-0 fa fa-heart"></i>
-                      </div>
-                  </button>
-              </div>
+              ${wish.likes > 0 ? `
+                <div class="d-flex flex-wrap justify-content-end align-items-center">
+                    <button style="font-size: 0.8rem;" onclick="like.like(this)"
+                        data-uuid="4e206228-42af-4b9e-aa2d-dd5fb7ebd5de"
+                        class="btn btn-sm rounded-2 py-0 px-0">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <p class="my-0 mx-1">${wish.likes}</p>
+                            <i class="py-1 me-1 p-0 fa fa-heart"></i>
+                        </div>
+                    </button>
+                </div>
+              ` : ''}
           </div>
         </div>
       `);
@@ -157,7 +257,7 @@ function onWishesLoaded(data) {
 function writeSheet(values) {
   return gapi.client.sheets.spreadsheets.values.append({
     spreadsheetId: SHEET_ID,
-    range: SHEET_RANGE,
+    range: SHEET_RANGE_WISHES,
     valueInputOption: 'RAW',
     insertDataOption: 'INSERT_ROWS',
     resource: {
@@ -181,7 +281,7 @@ async function sendWishes() {
 
   var data = [[
     String(parseInt(lastWishesId) + 1), // id,
-    'UD1', // id_undangan,
+    'UNDANGAN_ID', // id_undangan,
     formName.value, // name,
     formWishes.value, // content,
     new Date().toISOString(), // datetime,
