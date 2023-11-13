@@ -28,12 +28,12 @@ const util = (() => {
         navigator.clipboard.writeText(btn.getAttribute('data-nomer'));
 
         let tmp = btn.innerHTML;
-        btn.innerHTML = msg ?? 'Tersalin';
+        btn.innerHTML = sanitize`${msg ?? 'Tersalin'}`;
         btn.disabled = true;
 
         let clear = null;
         clear = setTimeout(() => {
-            btn.innerHTML = tmp;
+            btn.innerHTML = sanitize`${tmp}`;
             btn.disabled = false;
             btn.focus();
 
@@ -69,11 +69,11 @@ const util = (() => {
         if (btn.getAttribute('data-status') !== 'true') {
             btn.setAttribute('data-status', 'true');
             audio.play();
-            btn.innerHTML = '<i class="fa-solid fa-circle-pause"></i>';
+            btn.innerHTML = sanitize`<i class="fa-solid fa-circle-pause"></i>`;
         } else {
             btn.setAttribute('data-status', 'false');
             audio.pause();
-            btn.innerHTML = '<i class="fa-solid fa-circle-play"></i>';
+            btn.innerHTML = sanitize`<i class="fa-solid fa-circle-play"></i>`;
         }
     };
 
@@ -94,7 +94,7 @@ const util = (() => {
 
         let div = document.createElement('div');
         div.classList.add('m-2');
-        div.innerHTML = `<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
+        div.innerHTML = sanitize`<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
 
         // document.getElementById('form-nama').value = name;
         document.getElementById('nama-tamu').appendChild(div);

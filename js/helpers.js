@@ -59,3 +59,11 @@ function escapeHtml(unsafe) {
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
 }
+
+function sanitize(strings, ...values) {
+  const dirty = strings.reduce(
+    (prev, next, i) => `${prev}${next}${values[i] || ""}`,
+    ""
+  );
+  return DOMPurify.sanitize(dirty);
+}

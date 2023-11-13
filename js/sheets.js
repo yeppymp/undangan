@@ -35,13 +35,13 @@ async function initializeGapiClient() {
   let progressTotal = 75;
 
   await loadMeta();
-  // progressTotal = 75 + 8.33333333333;
-  // bar.style.width = `${progressTotal}%`;
-  // info.innerText = `Loading assets (10/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+  progressTotal = 75 + 8.33333333333;
+  bar.style.width = `${progressTotal}%`;
+  info.innerText = `Loading assets (10/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
   await loadMenu();
-  // progressTotal = 75 + (8.33333333333 * 2);
-  // bar.style.width = `${progressTotal}%`;
-  // info.innerText = `Loading assets (11/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+  progressTotal = 75 + (8.33333333333 * 2);
+  bar.style.width = `${progressTotal}%`;
+  info.innerText = `Loading assets (11/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
   await loadCover();
   progressTotal = 75 + (8.33333333333 * 3);
   bar.style.width = `${progressTotal}%`;
@@ -64,7 +64,7 @@ async function initializeGapiClient() {
 
   let div = document.createElement('div');
   div.classList.add('m-2');
-  div.innerHTML = `<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
+  div.innerHTML = sanitize`<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
 
   // document.getElementById('form-nama').value = name;
   document.getElementById('nama-tamu').appendChild(div);
@@ -139,11 +139,11 @@ async function loadMeta() {
 
 // MENU
 const renderMenu = (menu) => {
-  document.getElementById('nav-home').innerHTML = menu.home;
-  document.getElementById('nav-bride').innerHTML = menu.bride;
-  document.getElementById('nav-date').innerHTML = menu.date;
-  // document.getElementById('nav-gallery').innerHTML = menu.gallery;
-  document.getElementById('nav-wishes').innerHTML = menu.wishes;
+  document.getElementById('nav-home').innerHTML = sanitize`${menu.home}`;
+  document.getElementById('nav-bride').innerHTML = sanitize`${menu.bride}`;
+  document.getElementById('nav-date').innerHTML = sanitize`${menu.date}`;
+  // document.getElementById('nav-gallery').innerHTML = sanitize`${menu.gallery}`;
+  document.getElementById('nav-wishes').innerHTML = sanitize`${menu.wishes}`;
 }
 
 async function loadMenu() {
@@ -153,9 +153,9 @@ async function loadMenu() {
 
 // COVER
 const renderCover = (cover) => {
-  document.getElementById('cover-title').innerHTML = cover.title;
-  document.getElementById('cover-bride-name').innerHTML = cover.bride_name;
-  document.getElementById('cover-date').innerHTML = formatDate(cover.date);
+  document.getElementById('cover-title').innerHTML = sanitize`${cover.title}`;
+  document.getElementById('cover-bride-name').innerHTML = sanitize`${cover.bride_name}`;
+  document.getElementById('cover-date').innerHTML = sanitize`${formatDate(cover.date)}`;
 }
 
 async function loadCover() {
@@ -165,9 +165,9 @@ async function loadCover() {
 
 // HOME
 const renderHome = (home) => {
-  document.getElementById('home-title').innerHTML = home.title;
-  document.getElementById('home-bride-name').innerHTML = home.bride_name;
-  document.getElementById('home-date').innerHTML = formatDate(home.date);
+  document.getElementById('home-title').innerHTML = sanitize`${home.title}`;
+  document.getElementById('home-bride-name').innerHTML = sanitize`${home.bride_name}`;
+  document.getElementById('home-date').innerHTML = sanitize`${formatDate(home.date)}`;
   document.getElementById('home-calendar').setAttribute('href', home.calendar_url);
 }
 
@@ -178,14 +178,14 @@ async function loadHome() {
 
 // CONTENT
 const renderContent = (content) => {
-  document.getElementById('content-date').innerHTML = formatDate(content.date);
-  document.getElementById('content-groom-name').innerHTML = content.groom_name;
-  document.getElementById('content-groom-parent').innerHTML = content.groom_parent;
-  document.getElementById('content-bride-name').innerHTML = content.bride_name;
-  document.getElementById('content-bride-parent').innerHTML = content.bride_parent;
-  document.getElementById('content-akad').innerHTML = `Pukul ${content.akad_time} - Selesai`;
-  document.getElementById('content-resepsi').innerHTML = `Pukul ${content.resepsi_time} - Selesai`;
-  document.getElementById('content-address').innerHTML = content.address;
+  document.getElementById('content-date').innerHTML = sanitize`${formatDate(content.date)}`;
+  document.getElementById('content-groom-name').innerHTML = sanitize`${content.groom_name}`;
+  document.getElementById('content-groom-parent').innerHTML = sanitize`${content.groom_parent}`;
+  document.getElementById('content-bride-name').innerHTML = sanitize`${content.bride_name}`;
+  document.getElementById('content-bride-parent').innerHTML = sanitize`${content.bride_parent}`;
+  document.getElementById('content-akad').innerHTML = sanitize`Pukul ${content.akad_time} - Selesai}`;
+  document.getElementById('content-resepsi').innerHTML = sanitize`Pukul ${content.resepsi_time} - Selesai}`;
+  document.getElementById('content-address').innerHTML = sanitize`${content.address}`;
   document.getElementById('content-maps').setAttribute('href', content.maps);
 }
 
