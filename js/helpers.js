@@ -60,10 +60,10 @@ function escapeHtml(unsafe) {
       .replace(/'/g, '&#039;');
 }
 
-function sanitize(strings, ...values) {
-  const dirty = strings.reduce(
-    (prev, next, i) => `${prev}${next}${values[i] || ""}`,
-    ""
-  );
-  return DOMPurify.sanitize(dirty);
-}
+// Escape HTML Policy
+const sanitize = (policyName) => {
+  return trustedTypes.createPolicy(policyName, {
+    createHTML: (string) => string.replace(/>/g, "<"),
+  })
+};
+

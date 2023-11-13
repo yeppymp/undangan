@@ -16,11 +16,11 @@ const UNDANGAN_ID = 'UD1';
 
 const SHEET_ID = '1DMhwnJYkErVn5IMdWcbDf7mMZNVY9He19DgtydSs1ME';
 const SHEET_RANGE_WISHES  = `${UNDANGAN_ID}!A17:G`;
-const SHEET_RANGE_META    = `${UNDANGAN_ID}!A2:D3`;
-const SHEET_RANGE_MENU    = `${UNDANGAN_ID}!F2:J3`;
-const SHEET_RANGE_COVER   = `${UNDANGAN_ID}!A7:C8`;
-const SHEET_RANGE_HOME    = `${UNDANGAN_ID}!E7:H8`;
-const SHEET_RANGE_CONTENT = `${UNDANGAN_ID}!A12:I13`;
+// const SHEET_RANGE_META    = `${UNDANGAN_ID}!A2:D3`;
+// const SHEET_RANGE_MENU    = `${UNDANGAN_ID}!F2:J3`;
+// const SHEET_RANGE_COVER   = `${UNDANGAN_ID}!A7:C8`;
+// const SHEET_RANGE_HOME    = `${UNDANGAN_ID}!E7:H8`;
+// const SHEET_RANGE_CONTENT = `${UNDANGAN_ID}!A12:I13`;
 
 function gapiLoaded() {
   gapi.load('client', initializeGapiClient);
@@ -32,167 +32,167 @@ async function initializeGapiClient() {
     discoveryDocs: [DISCOVERY_DOC],
   });
 
-  let progressTotal = 75;
+  // let progressTotal = 75;
 
-  await loadMeta();
-  progressTotal = 75 + 8.33333333333;
-  bar.style.width = `${progressTotal}%`;
-  info.innerText = `Loading assets (10/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
-  await loadMenu();
-  progressTotal = 75 + (8.33333333333 * 2);
-  bar.style.width = `${progressTotal}%`;
-  info.innerText = `Loading assets (11/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
-  await loadCover();
-  progressTotal = 75 + (8.33333333333 * 3);
-  bar.style.width = `${progressTotal}%`;
-  info.innerText = `Loading assets (12/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+  // await loadMeta();
+  // progressTotal = 75 + 8.33333333333;
+  // bar.style.width = `${progressTotal}%`;
+  // info.innerText = `Loading assets (10/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+  // await loadMenu();
+  // progressTotal = 75 + (8.33333333333 * 2);
+  // bar.style.width = `${progressTotal}%`;
+  // info.innerText = `Loading assets (11/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
+  // await loadCover();
+  // progressTotal = 75 + (8.33333333333 * 3);
+  // bar.style.width = `${progressTotal}%`;
+  // info.innerText = `Loading assets (12/12) [${parseInt(bar.style.width).toFixed(0)}%]`;
 
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
+  // if ('scrollRestoration' in history) {
+  //   history.scrollRestoration = 'manual';
+  // }
 
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-  window.scrollTo(0, 0);
+  // document.body.scrollTop = 0;
+  // document.documentElement.scrollTop = 0;
+  // window.scrollTo(0, 0);
 
-  let name = (new URLSearchParams(window.location.search)).get('to') ?? '';
+  // let name = (new URLSearchParams(window.location.search)).get('to') ?? '';
 
-  if (name.length == 0) {
-      document.getElementById('nama-tamu').remove();
-      return;
-  }
+  // if (name.length == 0) {
+  //     document.getElementById('nama-tamu').remove();
+  //     return;
+  // }
 
-  let div = document.createElement('div');
-  div.classList.add('m-2');
-  div.innerHTML = sanitize`<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
+  // let div = document.createElement('div');
+  // div.classList.add('m-2');
+  // div.innerHTML = sanitize('nama-tamu-policy').createHTML`<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
 
-  // document.getElementById('form-nama').value = name;
-  document.getElementById('nama-tamu').appendChild(div);
+  // // document.getElementById('form-nama').value = name;
+  // document.getElementById('nama-tamu').appendChild(div);
 
-  loadHome();
-  loadContent();
+  // loadHome();
+  // loadContent();
 
-  let nm = document.getElementById('loading');
-  let op = parseInt(nm.style.opacity);
-  let clear = null;
+  // let nm = document.getElementById('loading');
+  // let op = parseInt(nm.style.opacity);
+  // let clear = null;
 
-  clear = setInterval(() => {
-      if (op >= 0) {
-          nm.style.opacity = op.toString();
-          op -= 0.025;
-      } else {
-          clearInterval(clear);
-          clear = null;
-          nm.remove();
-          return;
-      }
-  }, 10);
+  // clear = setInterval(() => {
+  //     if (op >= 0) {
+  //         nm.style.opacity = op.toString();
+  //         op -= 0.025;
+  //     } else {
+  //         clearInterval(clear);
+  //         clear = null;
+  //         nm.remove();
+  //         return;
+  //     }
+  // }, 10);
 }
 
-async function loadStaticData(range, type='META') {
-  let response;
-  try {
-    // Fetch first 10 files
-    response = await gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: SHEET_ID,
-      range,
-    });
-  } catch (err) {
-    console.log(`[${type}] Error: `, err);
-    return;
-  }
+// async function loadStaticData(range, type='META') {
+//   let response;
+//   try {
+//     // Fetch first 10 files
+//     response = await gapi.client.sheets.spreadsheets.values.get({
+//       spreadsheetId: SHEET_ID,
+//       range,
+//     });
+//   } catch (err) {
+//     console.log(`[${type}] Error: `, err);
+//     return;
+//   }
 
-  const rangeResult = response.result;
+//   const rangeResult = response.result;
 
-  if (!rangeResult || !rangeResult.values || rangeResult.values.length == 0) {
-    console.log(`[${type}] Error: No values found.`);
-    return;
-  }
+//   if (!rangeResult || !rangeResult.values || rangeResult.values.length == 0) {
+//     console.log(`[${type}] Error: No values found.`);
+//     return;
+//   }
 
-  const [headers, ...data] = rangeResult.values;
-  const staticData = data.map(row => {
-    return row.reduce((acc, value, i) => {
-      const key = headers[i];
-      if (key === '') return acc;
-      return { ...acc, [key]: value };
-    }, {});
-  })[0];
+//   const [headers, ...data] = rangeResult.values;
+//   const staticData = data.map(row => {
+//     return row.reduce((acc, value, i) => {
+//       const key = headers[i];
+//       if (key === '') return acc;
+//       return { ...acc, [key]: value };
+//     }, {});
+//   })[0];
 
-  return staticData;
-}
+//   return staticData;
+// }
 
-// META
-const renderMetadata = (meta) => {
-  document.title = meta.title;
+// // META
+// const renderMetadata = (meta) => {
+//   document.title = meta.title;
 
-  document.querySelector('meta[property="og:title"]').setAttribute("content", meta.title);
-  document.querySelector('meta[property="og:description"]').setAttribute("content", meta.description);
-  document.querySelector('meta[property="og:image:alt"]').setAttribute("content", meta.description);
-  document.querySelector('meta[property="og:site_name"]').setAttribute("content", meta.site_name);
-  document.querySelector('meta[property="og:url"]').setAttribute("content", meta.url);
-}
+//   document.querySelector('meta[property="og:title"]').setAttribute("content", meta.title);
+//   document.querySelector('meta[property="og:description"]').setAttribute("content", meta.description);
+//   document.querySelector('meta[property="og:image:alt"]').setAttribute("content", meta.description);
+//   document.querySelector('meta[property="og:site_name"]').setAttribute("content", meta.site_name);
+//   document.querySelector('meta[property="og:url"]').setAttribute("content", meta.url);
+// }
 
-async function loadMeta() {
-  const meta = await loadStaticData(SHEET_RANGE_META, 'META');
-  renderMetadata(meta);
-}
+// async function loadMeta() {
+//   const meta = await loadStaticData(SHEET_RANGE_META, 'META');
+//   renderMetadata(meta);
+// }
 
-// MENU
-const renderMenu = (menu) => {
-  document.getElementById('nav-home').innerHTML = sanitize`${menu.home}`;
-  document.getElementById('nav-bride').innerHTML = sanitize`${menu.bride}`;
-  document.getElementById('nav-date').innerHTML = sanitize`${menu.date}`;
-  // document.getElementById('nav-gallery').innerHTML = sanitize`${menu.gallery}`;
-  document.getElementById('nav-wishes').innerHTML = sanitize`${menu.wishes}`;
-}
+// // MENU
+// const renderMenu = (menu) => {
+//   document.getElementById('nav-home').innerHTML = sanitize('nav-home-policy').createHTML`${menu.home}`;
+//   document.getElementById('nav-bride').innerHTML = sanitize('nav-bride-policy').createHTML`${menu.bride}`;
+//   document.getElementById('nav-date').innerHTML = sanitize('nav-date-policy').createHTML`${menu.date}`;
+//   // document.getElementById('nav-gallery').innerHTML = sanitize('nav-gallery-policy').createHTML`${menu.gallery}`;
+//   document.getElementById('nav-wishes').innerHTML = sanitize('nav-wishes-policy').createHTML`${menu.wishes}`;
+// }
 
-async function loadMenu() {
-  const menu = await loadStaticData(SHEET_RANGE_MENU, 'MENU');
-  renderMenu(menu);
-}
+// async function loadMenu() {
+//   const menu = await loadStaticData(SHEET_RANGE_MENU, 'MENU');
+//   renderMenu(menu);
+// }
 
-// COVER
-const renderCover = (cover) => {
-  document.getElementById('cover-title').innerHTML = sanitize`${cover.title}`;
-  document.getElementById('cover-bride-name').innerHTML = sanitize`${cover.bride_name}`;
-  document.getElementById('cover-date').innerHTML = sanitize`${formatDate(cover.date)}`;
-}
+// // COVER
+// const renderCover = (cover) => {
+//   document.getElementById('cover-title').innerHTML = sanitize('cover-title-policy').createHTML`${cover.title}`;
+//   document.getElementById('cover-bride-name').innerHTML = sanitize('cover-bride-name-policy').createHTML`${cover.bride_name}`;
+//   document.getElementById('cover-date').innerHTML = sanitize('cover-date-policy').createHTML`${formatDate(cover.date)}`;
+// }
 
-async function loadCover() {
-  const cover = await loadStaticData(SHEET_RANGE_COVER, 'COVER');
-  renderCover(cover);
-}
+// async function loadCover() {
+//   const cover = await loadStaticData(SHEET_RANGE_COVER, 'COVER');
+//   renderCover(cover);
+// }
 
-// HOME
-const renderHome = (home) => {
-  document.getElementById('home-title').innerHTML = sanitize`${home.title}`;
-  document.getElementById('home-bride-name').innerHTML = sanitize`${home.bride_name}`;
-  document.getElementById('home-date').innerHTML = sanitize`${formatDate(home.date)}`;
-  document.getElementById('home-calendar').setAttribute('href', home.calendar_url);
-}
+// // HOME
+// const renderHome = (home) => {
+//   document.getElementById('home-title').innerHTML = sanitize('home-title-policy').createHTML`${home.title}`;
+//   document.getElementById('home-bride-name').innerHTML = sanitize('home-bride-name-policy').createHTML`${home.bride_name}`;
+//   document.getElementById('home-date').innerHTML = sanitize('home-date-policy').createHTML`${formatDate(home.date)}`;
+//   document.getElementById('home-calendar').setAttribute('href', home.calendar_url);
+// }
 
-async function loadHome() {
-  const home = await loadStaticData(SHEET_RANGE_HOME, 'HOME');
-  renderHome(home);
-}
+// async function loadHome() {
+//   const home = await loadStaticData(SHEET_RANGE_HOME, 'HOME');
+//   renderHome(home);
+// }
 
-// CONTENT
-const renderContent = (content) => {
-  document.getElementById('content-date').innerHTML = sanitize`${formatDate(content.date)}`;
-  document.getElementById('content-groom-name').innerHTML = sanitize`${content.groom_name}`;
-  document.getElementById('content-groom-parent').innerHTML = sanitize`${content.groom_parent}`;
-  document.getElementById('content-bride-name').innerHTML = sanitize`${content.bride_name}`;
-  document.getElementById('content-bride-parent').innerHTML = sanitize`${content.bride_parent}`;
-  document.getElementById('content-akad').innerHTML = sanitize`Pukul ${content.akad_time} - Selesai}`;
-  document.getElementById('content-resepsi').innerHTML = sanitize`Pukul ${content.resepsi_time} - Selesai}`;
-  document.getElementById('content-address').innerHTML = sanitize`${content.address}`;
-  document.getElementById('content-maps').setAttribute('href', content.maps);
-}
+// // CONTENT
+// const renderContent = (content) => {
+//   document.getElementById('content-date').innerHTML = sanitize('content-date-policy').createHTML`${formatDate(content.date)}`;
+//   document.getElementById('content-groom-name').innerHTML = sanitize('content-groom-name-policy').createHTML`${content.groom_name}`;
+//   document.getElementById('content-groom-parent').innerHTML = sanitize('content-groom-parent-policy').createHTML`${content.groom_parent}`;
+//   document.getElementById('content-bride-name').innerHTML = sanitize('content-bride-name-policy').createHTML`${content.bride_name}`;
+//   document.getElementById('content-bride-parent').innerHTML = sanitize('content-bride-parent-policy').createHTML`${content.bride_parent}`;
+//   document.getElementById('content-akad').innerHTML = sanitize('content-akad-policy').createHTML`Pukul ${content.akad_time} - Selesai}`;
+//   document.getElementById('content-resepsi').innerHTML = sanitize('content-resepsi-policy').createHTML`Pukul ${content.resepsi_time} - Selesai}`;
+//   document.getElementById('content-address').innerHTML = sanitize('content-address-policy').createHTML`${content.address}`;
+//   document.getElementById('content-maps').setAttribute('href', content.maps);
+// }
 
-async function loadContent() {
-  const home = await loadStaticData(SHEET_RANGE_CONTENT, 'CONTENT');
-  renderContent(home);
-}
+// async function loadContent() {
+//   const home = await loadStaticData(SHEET_RANGE_CONTENT, 'CONTENT');
+//   renderContent(home);
+// }
 
 // WISHES
 async function listWishes() {

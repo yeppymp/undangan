@@ -2,6 +2,64 @@
 const bar = document.getElementById('bar');
 const info = document.getElementById('progress-info');
 
+const renderMetadata = (meta) => {
+    document.title = meta.title;
+
+    document.querySelector('meta[property="og:title"]').setAttribute("content", meta.title);
+    document.querySelector('meta[property="og:description"]').setAttribute("content", meta.description);
+    document.querySelector('meta[property="og:image:alt"]').setAttribute("content", meta.description);
+    document.querySelector('meta[property="og:site_name"]').setAttribute("content", meta.site_name);
+    document.querySelector('meta[property="og:url"]').setAttribute("content", meta.url);
+}
+
+const renderMenu = (menu) => {
+    document.getElementById('nav-home').innerHTML = menu.home;
+    document.getElementById('nav-bride').innerHTML = menu.bride;
+    document.getElementById('nav-date').innerHTML = menu.date;
+    // document.getElementById('nav-gallery').innerHTML = menu.gallery;
+    // document.getElementById('nav-wishes').innerHTML = menu.wishes;
+}
+
+const renderCover = (cover) => {
+    document.getElementById('cover-title').innerHTML = cover.title;
+    document.getElementById('cover-bride-name').innerHTML = cover.bride_name;
+    document.getElementById('cover-date').innerHTML = formatDate(cover.date);
+}
+
+const renderHome = (home) => {
+    document.getElementById('home-title').innerHTML = home.title;
+    document.getElementById('home-bride-name').innerHTML = home.bride_name;
+    document.getElementById('home-date').innerHTML = formatDate(home.date);
+    document.getElementById('home-calendar').setAttribute('href', home.calendar_url);
+}
+
+const renderContent = (content) => {
+    document.getElementById('content-date').innerHTML = formatDate(content.date);
+    document.getElementById('content-groom-name').innerHTML = content.groom.name;
+    document.getElementById('content-groom-parent').innerHTML = content.groom.parent;
+    document.getElementById('content-bride-name').innerHTML = content.bride.name;
+    document.getElementById('content-bride-parent').innerHTML = content.bride.parent;
+    document.getElementById('content-akad').innerHTML = `Pukul ${content.akad_time} - Selesai`;
+    document.getElementById('content-resepsi').innerHTML = `Pukul ${content.resepsi_time} - Selesai`;
+    document.getElementById('content-address').innerHTML = content.place.address;
+    document.getElementById('content-maps').setAttribute('href', content.place.maps);
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    // Fetch the JSON data
+    // fetch('https://raw.githubusercontent.com/yeppymp/undangan/main/data.json')
+    fetch('../data.json')
+        .then(response => response.json())
+        .then(data => {
+            renderMetadata(data.meta);
+            renderMenu(data.menus);
+            renderCover(data.cover);
+            renderHome(data.home);
+            renderContent(data.content);
+        })
+        .catch(error => console.error('Error fetching JSON:', error));
+});
+
 const util = (() => {
 
     // OK
@@ -28,12 +86,12 @@ const util = (() => {
         navigator.clipboard.writeText(btn.getAttribute('data-nomer'));
 
         let tmp = btn.innerHTML;
-        btn.innerHTML = sanitize`${msg ?? 'Tersalin'}`;
+        btn.innerHTML = msg ?? 'Tersalin';
         btn.disabled = true;
 
         let clear = null;
         clear = setTimeout(() => {
-            btn.innerHTML = sanitize`${tmp}`;
+            btn.innerHTML = tmp;
             btn.disabled = false;
             btn.focus();
 
@@ -69,11 +127,11 @@ const util = (() => {
         if (btn.getAttribute('data-status') !== 'true') {
             btn.setAttribute('data-status', 'true');
             audio.play();
-            btn.innerHTML = sanitize`<i class="fa-solid fa-circle-pause"></i>`;
+            btn.innerHTML = `<i class="fa-solid fa-circle-pause"></i>`;
         } else {
             btn.setAttribute('data-status', 'false');
             audio.pause();
-            btn.innerHTML = sanitize`<i class="fa-solid fa-circle-play"></i>`;
+            btn.innerHTML = `<i class="fa-solid fa-circle-play"></i>`;
         }
     };
 
@@ -94,7 +152,7 @@ const util = (() => {
 
         let div = document.createElement('div');
         div.classList.add('m-2');
-        div.innerHTML = sanitize`<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
+        div.innerHTML = `<p class="mt-4 mb-1 mx-0 p-0 text-light">Kepada Yth Bapak/Ibu/Saudara/i</p><h2 class="text-light">${escapeHtml(name)}</h2>`;
 
         // document.getElementById('form-nama').value = name;
         document.getElementById('nama-tamu').appendChild(div);
@@ -170,7 +228,8 @@ const progress = (() => {
 
     const assets = document.querySelectorAll('img');
 
-    let total = assets.length + 3;
+    // let total = assets.length + 3;
+    let total = assets.length;
     let loaded = 0;
 
     const progress = () => {
