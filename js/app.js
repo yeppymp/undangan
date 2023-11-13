@@ -47,8 +47,8 @@ const renderContent = (content) => {
 
 window.addEventListener('DOMContentLoaded', (event) => {
     // Fetch the JSON data
-    // fetch('https://raw.githubusercontent.com/yeppymp/undangan/main/data.json')
-    fetch('../data.json')
+    fetch('https://raw.githubusercontent.com/yeppymp/undangan/main/data.json')
+    // fetch('../data.json')
         .then(response => response.json())
         .then(data => {
             renderMetadata(data.meta);
