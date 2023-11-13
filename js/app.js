@@ -17,7 +17,7 @@ const renderMenu = (menu) => {
     document.getElementById('nav-bride').innerHTML = menu.bride;
     document.getElementById('nav-date').innerHTML = menu.date;
     // document.getElementById('nav-gallery').innerHTML = menu.gallery;
-    // document.getElementById('nav-wishes').innerHTML = menu.wishes;
+    document.getElementById('nav-wishes').innerHTML = menu.wishes;
 }
 
 const renderCover = (cover) => {
