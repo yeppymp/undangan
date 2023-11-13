@@ -43,6 +43,11 @@ body::-webkit-scrollbar {
     bottom: 9vh;
     right: 2vh;
     z-index: 1055;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    width: 32px;
 }
 
 .loading-page {

@@ -9,18 +9,18 @@
     <meta name="description" content="Website Undangan Pernikahan Yeppy & Riski Secara Online">
     <meta name="theme-color" content="#212529">
     <meta name="color-scheme" content="dark">
-    <link rel="icon" type="image/png" href="https://ulems.my.id/assets/images/icon-192x192.png">
+    <link rel="icon" type="image/png" href="assets/images/icon-192x192.png">
 
     <!-- SEO Tag -->
     <meta property="og:title" content="Undangan Pernikahan Yeppy & Riski">
     <meta property="og:description" content="Website Undangan Pernikahan Yeppy & Riski Secara Online">
-    <meta property="og:image" content="https://ulems.my.id/assets/images/bg.jpeg">
+    <meta property="og:image" content="assets/images/bg.jpeg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:alt" content="Undangan Pernikahan Yeppy & Riski">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="id_ID">
     <meta property="og:site_name" content="Undangan">
-    <meta property="og:url" content="https://ulems.my.id/">
+    <meta property="og:url" content="https://yeppymp.github.io/undangan">
 
     <!-- Preconnect CDN -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="anonymous">
@@ -44,8 +44,7 @@
     <link rel="stylesheet" href="./css/app.css">
 </head>
 
-<body data-email="user@example.com" data-password="12345678" data-url="https://api.ulems.my.id/"
-    style="overflow-y: hidden;">
+<body style="overflow-y: hidden;">
 
     <!-- Navbar Bottom -->
     <nav class="navbar navbar-dark bg-dark navbar-expand fixed-bottom rounded-top-4 p-0" id="navbar-menus">
@@ -73,13 +72,13 @@
                     <i class="fa-solid fa-images"></i>
                     <span id="nav-gallery" class="d-block" style="font-size: 0.7rem;">Galeri</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="#ucapan">
                     <i class="fa-solid fa-comments"></i>
                     <span id="nav-wishes" class="d-block" style="font-size: 0.7rem;">Ucapan</span>
                 </a>
-            </li> -->
+            </li>
         </ul>
     </nav>
 
@@ -100,7 +99,7 @@
                 </div>
 
                 <h1 id="home-bride-name" class="font-esthetic my-4" style="font-size: 3rem;">... & ...</h1>
-                <h4 id="home-date">Rabu, 15 Maret 2023</h4>
+                <h4 id="home-date">Minggu, 26 November 2023</h4>
 
                 <a class="btn btn-outline-light btn-sm shadow rounded-pill px-3 my-2" target="_blank"
                     href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The%20Wedding%20of%20...%20and%20...&details=The%20Wedding%20of%20...%20and%20...%20%7C%2015%20Maret%202023%20%7C%20RT%2010%20RW%2002,%20Desa%20Pajerukan,%20Kec.%20Kalibagor,%20Kab.%20Banyumas,%20Jawa%20Tengah%2053191%20%7C%2010.00%20-%2011.00%20WIB&dates=20230315T100000/20230315T110000&location=https://goo.gl/maps/ALZR6FJZU3kxVwN86">
@@ -416,7 +415,7 @@
         </div>
 
         <!-- Ucapan -->
-        <!-- <section class="m-0 p-0" id="ucapan">
+        <section class="m-0 p-0" id="ucapan">
             <div class="container">
 
                 <div class="card-body border rounded-4 shadow p-3">
@@ -429,30 +428,23 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="form-kehadiran" class="form-label" id="label-kehadiran">Kehadiran</label>
+                        <label for="form-kehadiran" class="form-label" id="label-kehadiran">Kehadiran Kehadiran</label>
                         <select class="form-select shadow-sm" id="form-kehadiran">
-                            <option value="0" selected>Konfirmasi Kehadiran</option>
-                            <option value="1">Hadir</option>
-                            <option value="2">Berhalangan</option>
+                            <option value="" disabled>Konfirmasi Kehadiran</option>
+                            <option value="1" selected>Hadir</option>
+                            <option value="0">Berhalangan</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="form-pesan" class="form-label">Ucapan & Doa</label>
-                        <textarea class="form-control shadow-sm" id="form-pesan" rows="4" placeholder="Tulis Ucapan & Doa"></textarea>
+                        <textarea class="form-control shadow-sm" id="form-pesan" rows="4"
+                            placeholder="Tulis Ucapan & Doa"></textarea>
                     </div>
 
                     <div class="d-flex">
-                        <button class="flex-fill btn btn-danger btn-sm rounded-3 shadow m-1" style="display: none;" onclick="comment.batal()" id="batal">
-                            Batal<i class="fa-solid fa-xmark ms-1"></i>
-                        </button>
-                        <button class="flex-fill btn btn-success btn-sm rounded-3 shadow m-1" style="display: none;" onclick="comment.reply()" id="reply">
-                            Balas<i class="fa-solid fa-reply ms-1"></i>
-                        </button>
-                        <button class="flex-fill btn btn-warning btn-sm rounded-3 shadow m-1" style="display: none;" onclick="comment.ubah()" id="ubah">
-                            Edit<i class="fa-solid fa-pen-to-square ms-1"></i>
-                        </button>
-                        <button class="flex-fill btn btn-primary btn-sm rounded-3 shadow m-1" onclick="comment.kirim()" id="kirim">
+                        <button class="flex-fill btn btn-primary btn-sm rounded-3 shadow m-1" onclick="sendWishes()"
+                            id="kirim">
                             Kirim<i class="fa-solid fa-paper-plane ms-1"></i>
                         </button>
                     </div>
@@ -460,7 +452,7 @@
 
                 <div class="rounded-4 mt-4 mb-2" id="daftar-ucapan"></div>
 
-                <nav class="d-flex justify-content-center mb-0">
+                <!-- <nav class="d-flex justify-content-center mb-0">
                     <ul class="pagination mb-0">
                         <li class="page-item disabled" id="previous">
                             <button class="page-link" onclick="pagination.previous(this)" aria-label="Previous">
@@ -476,9 +468,9 @@
                             </button>
                         </li>
                     </ul>
-                </nav>
+                </nav> -->
             </div>
-        </section> -->
+        </section>
 
         <!-- Wave Separator -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -542,6 +534,11 @@
                 <button type="button" class="btn btn-light shadow rounded-4 mt-4" onclick="util.buka()">
                     <i class="fa-solid fa-envelope-open me-2"></i>Buka Undangan
                 </button>
+                <!--Add buttons to initiate auth sequence and sign out-->
+                <!--<button type="button" id="authorize_button" class="btn btn-light shadow rounded-4 mt-4" onclick="handleAuthClick()">Authorize</button>
+                <button id="signout_button" class="btn btn-light shadow rounded-4 mt-4" onclick="handleSignoutClick()">Sign Out</button>
+        
+                <pre id="content" style="white-space: pre-wrap;"></pre>-->
             </div>
         </div>
     </div>
@@ -585,86 +582,14 @@
         integrity="sha256-pQBbLkFHcP1cy0C8IhoSdxlm0CtcH5yJ2ki9jjgR03c=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.12.0/tsparticles.confetti.bundle.min.js"
         integrity="sha256-XG5M9shcLLpu8ct5bVbu6lLVzLpfZChl+csxdyLVP18=" crossorigin="anonymous"></script>
-
-    <!-- Include the Google API client library -->
-    <script src="https://apis.google.com/js/api.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/gh/tanaikech/GetAccessTokenFromServiceAccount_js@master/getaccesstokengromserviceaccount_js.min.js"></script>
 
     <!-- Custom JS -->
+    <script src="./js/sheets.js"></script>
     <script src="./js/app.js"></script>
-    <script>
-        // Load the Google API client library
-        function loadClient() {
-            console.log('loadClient');
-            gapi.client.load('sheets', 'v4', initClient);
-        }
 
-        // Initialize the API client and set up authorization with the service account
-        function initClient() {
-            console.log('init client');
-            // Your service account JSON key
-            const key = {
-                "type": "service_account",
-                "project_id": "undangan-404911",
-                "private_key_id": "6c5f2a185c72f5ef26592a74fdbfa1d1bc4753f5",
-                "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDKydWngZS0e8iC\n5xGqZXLZOC2BvHnQxjntexyq/7wc07X32ODUc2wWz8fFcSlPJjQi5c6C/JXRqrE4\n6yGVf9PMzHreoMBPXbM+rfQOgs3uSy+a8//ZY99fim1Nap23ATGEWGT2LA7ZvQoz\nThrRAwpNtqzPvKXDUhqeWGMP8ka0pcCiZi9R0PDtfSvQ2K0ICo6b9f/0aroRgzwe\nAXUhRKD5KaC25o6DDJQxY/88NEIwB6lF+olM6ZOHbSs5fZuwp6eZ2q4h1ndA4oVC\nt7UQ94nP1+LHhdHQAaGW7orWzDqdYcFW3Y1l9byA+2JR+kELuPI10TJuuzTb6yXv\nEZm4x+KBAgMBAAECggEAA+T+rQ/+Zb1zVz0+D/xRCXYsXI+ctMtbyTFqNmgBKjoQ\nJnWEMtxRHPqKUwLGePJKQcnRTp9wdqV9MBNG8raw3//k07H5Y4TQiJGBbIZrU0pf\nHI4XUara+zwet4QGyaEUnP6wGLC1q82XPK9BMVaqO94YYUh1lAPXhkc7Bs8/t6An\nC5pUFOFxYWL49Y8XOEghHE6YuDmBZMdUxWoHvcF5zv1MwhA6fFUrP4njygGcMQpY\nvttJ7NMu2DvjjI9XOvG8ZZeRXvWmSLlhqHA2WNFF9GQyu9AfWmfiBTrx97dIZ3gN\nwE3gogNwd0MsHxMu1snAvBl1ibc9LZFpNLDDPdlQGQKBgQDlS49l0YOCV+fpvVpV\nrjAZmZIPMKK5GRgiLAMQzqvxf8lZkwwUwcM2AWTJG9Yc1byuJirnosZPy1TGwqyO\n3hjwukQRoJ/21S2Ht/GzsVldZP+osrnEM0KZOuPVi1g6F6DZI6nDivHEAstN+8Z2\nEFeGOPy72simiQGLnxYX6BJUiQKBgQDiZ/m1WQq9tv7TrR/BhkZ7h+3QAOGvGKlu\nqTFWJ2Ggz6ujBt9FV7E8e67novGEb3a6tTlqrG3tb2sKfzqn1DeKVs+ycMjSQz+N\niFvtSDPrcxOX3sYR7cByLdOzM9vpyuQ6UykFco6DbC89F8Yg+UbsvgRpUlI5i/j6\n1DJWFnaQOQKBgHxEbRzjZYB4n8l/w7t3wb2+CviMhUQHo5qxe5/aQjmJ5dfT59JA\nCMn2C2cq3OmXtMA1Ez+iahPIwNNPojFzkNS2PjnHcapWcmyBdk7KqQICwMPuyNra\nZReiYOPUtyYUtCm6OEEvxkNSuFg1QaOuy6CEtgQhWGlZCyteNp0SOwzxAoGBALV+\n9p3bEJI/NY8JNPDVrIDw2cKqQkE0evbcKVHQZiIc+JHLO4cCInHDENZeOFCbbkmE\nZ8/NBJ6Xd+7FSYcqx49dwkhgw4xTHopeKptQC1cPPEC99HiA6IpflFsPEpcb79OV\nwMe+KuLOAhxuh4T9cE7ukOjBdmrte53QJ739afR5AoGBANto+dpLPgQ1FwNvSr/m\n45q9s6bjXCW+sAfu3QjPeN/aToOGqdoHA4uBg5C6x5GaF+gtDRvY6N90BqUobn6L\n1g2Pu0EVX0b03v26GzG/JZZ1aqgMi2SAgKH+8QZJ7dk5dbJqhwR6/wkWHv8OiBAk\nq7ee4449gW/rhdytZicoK0L3\n-----END PRIVATE KEY-----\n",
-                "client_email": "yeppy-358@undangan-404911.iam.gserviceaccount.com",
-                "client_id": "102251016077178238680",
-                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                "token_uri": "https://oauth2.googleapis.com/token",
-                "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-                "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/yeppy-358%40undangan-404911.iam.gserviceaccount.com",
-                "universe_domain": "googleapis.com"
-            }
-
-
-            // Array of API discovery doc URLs for APIs used by the Sheets API
-            const discoveryDocs = ['https://sheets.googleapis.com/$discovery/rest?version=v4'];
-
-            // Set up the service account authorization
-            gapi.auth.authorize(
-                {
-                    'client_id': key.client_id,
-                    'scope': 'https://www.googleapis.com/auth/spreadsheets',
-                    discoveryDocs,
-                },
-                function (authResult) {
-                    if (authResult.error) {
-                        console.error('Authorization error:', authResult.error);
-                    } else {
-                        readSheet();
-                    }
-                }
-            );
-        }
-
-        // Read data from the Google Sheet
-        function readSheet() {
-            console.log('read sheet');
-            // Your spreadsheet ID and range
-            const spreadsheetId = '1DMhwnJYkErVn5IMdWcbDf7mMZNVY9He19DgtydSs1ME';
-            const range = 'U0001!A1:B10';
-
-            gapi.client.sheets.spreadsheets.values.get({
-                spreadsheetId: spreadsheetId,
-                range: range,
-            }).then(function (response) {
-                const values = response.result.values;
-                console.log('Data from the Google Sheet:', values);
-            }, function (error) {
-                console.error('Error reading Google Sheet:', error);
-            });
-        }
-
-        // Load the Google API client library and initiate the authentication process
-        function handleClientLoad() {
-            console.log('handleClientLoad');
-            gapi.load('client', loadClient);
-        }
-
-        window.onload = function () {
-            handleClientLoad();
-        }
-    </script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
 </body>
 
 </html>

@@ -2,3 +2,5 @@
 CNAME
 CODE_OF_CONDUCT.md
 SECURITY.md
+.DS_Store
+*/.DS_Store
