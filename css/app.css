@@ -111,3 +111,9 @@ footer {
     margin-top: -5px;
     padding-bottom: 4rem;
 }
+
+#carousel-foto-dua .carousel-item img {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+}
