@@ -112,6 +112,12 @@ footer {
     padding-bottom: 4rem;
 }
 
+#carousel-foto-satu .carousel-item img {
+    height: 650px;
+    width: 100%;
+    object-fit: cover;
+}
+
 #carousel-foto-dua .carousel-item img {
     height: 250px;
     width: 100%;
